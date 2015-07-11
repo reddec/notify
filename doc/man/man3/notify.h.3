@@ -1,0 +1,407 @@
+.TH "notify.h" 3 "Sun Jul 12 2015" "Notify" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+notify.h \- 
+Notification on multicast UDP communication\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdint\&.h>\fP
+.br
+\fC#include <stdlib\&.h>\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fBnotify_packet_t\fP"
+.br
+.RI "\fIContainer of packet\&. Contains only pointers to parts in external buffer\&. \fP"
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB__NOTIFY_MAX_FORMAT_LEN\fP   255"
+.br
+.ti -1c
+.RI "#define \fB__NOTIFY_MAX_TITLE_LEN\fP   255"
+.br
+.ti -1c
+.RI "#define \fB__NOTIFY_PACKET_LIMIT\fP   65500"
+.br
+.ti -1c
+.RI "#define \fB__NOTIFY_MAX_DATA_LEN\fP   \fB__NOTIFY_PACKET_LIMIT\fP - \fB__NOTIFY_MAX_FORMAT_LEN\fP - 1 - \fB__NOTIFY_MAX_TITLE_LEN\fP - 1"
+.br
+.ti -1c
+.RI "#define \fB__NOTIFY_MCAST_ADDR\fP   3774347255"
+.br
+.RI "\fIIP: 224\&.247\&.247\&.247\&. \fP"
+.ti -1c
+.RI "#define \fB__NOTIFY_MCAST_PORT\fP   24724"
+.br
+.ti -1c
+.RI "#define \fB__NOTIFY_FIELD_DELIMITER\fP   '\\0'"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fBnotify_packet_t\fP \fBnotify_packet_t\fP"
+.br
+.RI "\fIContainer of packet\&. Contains only pointers to parts in external buffer\&. \fP"
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBnotify_code\fP { \fBnotify_error_common\fP = -1, \fBnotify_error_allocation\fP = -2, \fBnotify_error_bind\fP = -3, \fBnotify_error_join\fP = -4, \fBnotify_error_bad_socket\fP = -5, \fBnotify_error_timeout\fP = -6 }"
+.br
+.RI "\fIReturn codes for each functions\&. \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "ssize_t \fBnotify_packet\fP (int socket_fd, \fBnotify_packet_t\fP packet)"
+.br
+.RI "\fISend notification packet\&. \fP"
+.ti -1c
+.RI "ssize_t \fBnotify_data\fP (int socket_fd, const char *format, const char *title, const void *data, size_t data_size)"
+.br
+.RI "\fISend notification with raw data\&. Wraps it to \fBnotify_packet_t\fP and sends\&. \fP"
+.ti -1c
+.RI "ssize_t \fBnotify_text\fP (int socket_fd, const char *format, const char *title, const char *text)"
+.br
+.RI "\fISend notification with textual data\&. \fP"
+.ti -1c
+.RI "ssize_t \fBnotify_local_tcp_service\fP (int socket_fd, const char *service_name, uint16_t port)"
+.br
+.RI "\fISend notification of TCP service\&. \fP"
+.ti -1c
+.RI "ssize_t \fBnotify_local_udp_service\fP (int socket_fd, const char *service_name, uint16_t port)"
+.br
+.RI "\fISend notification of UDP service\&. \fP"
+.ti -1c
+.RI "ssize_t \fBnotify_setup_listener\fP (int socket_fd)"
+.br
+.RI "\fISetup UDP socket as multicast listener: bind, sets REUSE_ADDR and joins to multicast group\&. \fP"
+.ti -1c
+.RI "ssize_t \fBnotify_collect\fP (int socket_fd, size_t interval_ms, char *buffer, size_t buf_size)"
+.br
+.RI "\fICollect first notification message till specified interval\&. \fP"
+.ti -1c
+.RI "\fBnotify_packet_t\fP \fBnotify_parse_packet\fP (const char *buffer, size_t size)"
+.br
+.RI "\fIParse notification message to \fBnotify_packet_t\fP structure\&. \fP"
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "static const size_t \fBnotify_max_format_len\fP = \fB__NOTIFY_MAX_FORMAT_LEN\fP"
+.br
+.RI "\fIMaximum size in bytes of \fCformat\fP field\&. \fP"
+.ti -1c
+.RI "static const size_t \fBnotify_max_title_len\fP = \fB__NOTIFY_MAX_TITLE_LEN\fP"
+.br
+.RI "\fIMaximum size in bytes of \fCtitle\fP field\&. \fP"
+.ti -1c
+.RI "static const size_t \fBnotify_max_data_len\fP = \fB__NOTIFY_MAX_DATA_LEN\fP"
+.br
+.RI "\fIMaximum size in bytes of payload\&. \fP"
+.ti -1c
+.RI "static const size_t \fBnotify_max_packet_size\fP = \fB__NOTIFY_PACKET_LIMIT\fP"
+.br
+.RI "\fIMaximum size in bytes of notification packet\&. \fP"
+.ti -1c
+.RI "static const uint32_t \fBnotify_mcast_address\fP = \fB__NOTIFY_MCAST_ADDR\fP"
+.br
+.RI "\fIMulticast address for communication\&. \fP"
+.ti -1c
+.RI "static const uint16_t \fBnotify_mcast_port\fP = \fB__NOTIFY_MCAST_PORT\fP"
+.br
+.RI "\fIPort of multicast address for communication\&. \fP"
+.ti -1c
+.RI "static const uint8_t \fBnotify_field_delimiter\fP = \fB__NOTIFY_FIELD_DELIMITER\fP"
+.br
+.RI "\fIDelimiter between fields in packet\&. \fP"
+.ti -1c
+.RI "static const char \fBnotify_format_tcp_service\fP [] = 'service\&.tcp\\0'"
+.br
+.RI "\fIPredefined \fCformat\fP for TCP service\&. \fP"
+.ti -1c
+.RI "static const char \fBnotify_format_udp_service\fP [] = 'service\&.udp\\0'"
+.br
+.RI "\fIPredefined \fCformat\fP for UDP service\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Notification on multicast UDP communication\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+RedDec net.dev@mail.ru 
+.RE
+.PP
+
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define __NOTIFY_FIELD_DELIMITER   '\\0'"
+
+.SS "#define __NOTIFY_MAX_DATA_LEN   \fB__NOTIFY_PACKET_LIMIT\fP - \fB__NOTIFY_MAX_FORMAT_LEN\fP - 1 - \fB__NOTIFY_MAX_TITLE_LEN\fP - 1"
+
+.SS "#define __NOTIFY_MAX_FORMAT_LEN   255"
+
+.SS "#define __NOTIFY_MAX_TITLE_LEN   255"
+
+.SS "#define __NOTIFY_MCAST_ADDR   3774347255"
+
+.PP
+IP: 224\&.247\&.247\&.247\&. 
+.SS "#define __NOTIFY_MCAST_PORT   24724"
+
+.SS "#define __NOTIFY_PACKET_LIMIT   65500"
+
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fBnotify_packet_t\fP  \fBnotify_packet_t\fP"
+
+.PP
+Container of packet\&. Contains only pointers to parts in external buffer\&. 
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBnotify_code\fP"
+
+.PP
+Return codes for each functions\&. 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fInotify_error_common \fP\fP
+Common error\&. May be changed to more detailed code in future releases\&. 
+.TP
+\fB\fInotify_error_allocation \fP\fP
+Can't allocate required memory\&. 
+.TP
+\fB\fInotify_error_bind \fP\fP
+Can't bind UDP socket\&. 
+.TP
+\fB\fInotify_error_join \fP\fP
+Can't join to multicast group\&. 
+.TP
+\fB\fInotify_error_bad_socket \fP\fP
+Can't use socket\&. Usually it was closed or created incorrectly\&. 
+.TP
+\fB\fInotify_error_timeout \fP\fP
+Nothing received till specified time interval\&. 
+.SH "Function Documentation"
+.PP 
+.SS "ssize_t notify_collect (intsocket_fd, size_tinterval_ms, char *buffer, size_tbuf_size)"
+
+.PP
+Collect first notification message till specified interval\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsocket_fd\fP UDP socket descriptor 
+.br
+\fIinterval_ms\fP Time interval in milliseconds\&. If nothing received \fCnotify_error_timeout\fP will be returned 
+.br
+\fIbuffer\fP Buffer for incoming packet\&. More then \fCnotify_max_packet_size\fP is not required 
+.br
+\fIbuf_size\fP Maximum buffer size for incoming packet 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+- \fBnotify_error_bad_socket\fP, \fBnotify_error_common\fP, \fBnotify_error_timeout\fP, otherwise - size of received packet 
+.RE
+.PP
+
+.SS "ssize_t notify_data (intsocket_fd, const char *format, const char *title, const void *data, size_tdata_size)"
+
+.PP
+Send notification with raw data\&. Wraps it to \fBnotify_packet_t\fP and sends\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsocket_fd\fP UDP socket descriptor 
+.br
+\fIformat\fP Packet format type\&. Can be used as small description of payload format 
+.br
+\fItitle\fP Head of packet content 
+.br
+\fIdata`\fP Payload content 
+.br
+\fIdata_size\fP Payload content size\&. Can't be more then \fBnotify_max_data_len\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+same as \fBnotify_packet\fP 
+.RE
+.PP
+
+.SS "ssize_t notify_local_tcp_service (intsocket_fd, const char *service_name, uint16_tport)"
+
+.PP
+Send notification of TCP service\&. Wraps it to \fBnotify_packet_t\fP with format \fBnotify_format_tcp_service\fP and sends\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsocket_fd\fP UDP socket descriptor 
+.br
+\fIservice_name\fP TCP logical service name 
+.br
+\fIport\fP TCP listening service port 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+same as \fBnotify_packet\fP 
+.RE
+.PP
+
+.SS "ssize_t notify_local_udp_service (intsocket_fd, const char *service_name, uint16_tport)"
+
+.PP
+Send notification of UDP service\&. Wraps it to \fC\fBnotify_packet_t\fP\fP with format \fBnotify_format_udp_service\fP and sends\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsocket_fd\fP UDP socket descriptor 
+.br
+\fIservice_name\fP UDP logical service name 
+.br
+\fIport\fP UDP listening service port 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+- same as \fBnotify_packet\fP 
+.RE
+.PP
+
+.SS "ssize_t notify_packet (intsocket_fd, \fBnotify_packet_t\fPpacket)"
+
+.PP
+Send notification packet\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsocket_fd\fP UDP socket descriptor 
+.br
+\fIpacket\fP notification packet 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fBnotify_error_bad_socket\fP, \fBnotify_error_allocation\fP, -1 (on socket error) or sent bytes 
+.RE
+.PP
+
+.SS "\fBnotify_packet_t\fP notify_parse_packet (const char *buffer, size_tsize)"
+
+.PP
+Parse notification message to \fBnotify_packet_t\fP structure\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbuffer\fP packet raw data 
+.br
+\fIsize\fP size of packet 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+notification structure\&. If some fields can't be parsed, they will be filled by NULL 
+.RE
+.PP
+
+.SS "ssize_t notify_setup_listener (intsocket_fd)"
+
+.PP
+Setup UDP socket as multicast listener: bind, sets REUSE_ADDR and joins to multicast group\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsocket_fd\fP UDP socket descriptor 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fBnotify_error_bad_socket\fP, \fBnotify_error_bind\fP, \fBnotify_error_join\fP otherwise 0 
+.RE
+.PP
+
+.SS "ssize_t notify_text (intsocket_fd, const char *format, const char *title, const char *text)"
+
+.PP
+Send notification with textual data\&. Wraps it to \fBnotify_packet_t\fP and sends\&. Content size determinated by strnlen() and can't be more then \fBnotify_max_data_len\fP
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsocket_fd\fP UDP socket descriptor 
+.br
+\fIformat\fP Packet format type\&. Can be used as small description of payload format 
+.br
+\fItitle\fP Head of packet content 
+.br
+\fItext\fP Payload text content 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+same as \fBnotify_packet\fP 
+.RE
+.PP
+
+.SH "Variable Documentation"
+.PP 
+.SS "const uint8_t notify_field_delimiter = \fB__NOTIFY_FIELD_DELIMITER\fP\fC [static]\fP"
+
+.PP
+Delimiter between fields in packet\&. 
+.SS "const char notify_format_tcp_service[] = 'service\&.tcp\\0'\fC [static]\fP"
+
+.PP
+Predefined \fCformat\fP for TCP service\&. 
+.SS "const char notify_format_udp_service[] = 'service\&.udp\\0'\fC [static]\fP"
+
+.PP
+Predefined \fCformat\fP for UDP service\&. 
+.SS "const size_t notify_max_data_len = \fB__NOTIFY_MAX_DATA_LEN\fP\fC [static]\fP"
+
+.PP
+Maximum size in bytes of payload\&. 
+.SS "const size_t notify_max_format_len = \fB__NOTIFY_MAX_FORMAT_LEN\fP\fC [static]\fP"
+
+.PP
+Maximum size in bytes of \fCformat\fP field\&. 
+.SS "const size_t notify_max_packet_size = \fB__NOTIFY_PACKET_LIMIT\fP\fC [static]\fP"
+
+.PP
+Maximum size in bytes of notification packet\&. 
+.SS "const size_t notify_max_title_len = \fB__NOTIFY_MAX_TITLE_LEN\fP\fC [static]\fP"
+
+.PP
+Maximum size in bytes of \fCtitle\fP field\&. 
+.SS "const uint32_t notify_mcast_address = \fB__NOTIFY_MCAST_ADDR\fP\fC [static]\fP"
+
+.PP
+Multicast address for communication\&. 
+.SS "const uint16_t notify_mcast_port = \fB__NOTIFY_MCAST_PORT\fP\fC [static]\fP"
+
+.PP
+Port of multicast address for communication\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Notify from the source code\&.

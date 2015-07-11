@@ -1,0 +1,436 @@
+\hypertarget{notify_8h}{\section{notify.\-h File Reference}
+\label{notify_8h}\index{notify.\-h@{notify.\-h}}
+}
+
+
+Notification on multicast U\-D\-P communication.  
+
+
+{\ttfamily \#include $<$stdint.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t}
+\begin{DoxyCompactList}\small\item\em Container of packet. Contains only pointers to parts in external buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{notify_8h_ab88c18a0674d6466c04a1f90be55fd1c}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N}~255
+\item 
+\#define \hyperlink{notify_8h_a8abacded46f4d1f1036e165ad9936c6b}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N}~255
+\item 
+\#define \hyperlink{notify_8h_a573475aa25c3d4707d4f3eb2bb01aff1}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T}~65500
+\item 
+\#define \hyperlink{notify_8h_a8e840f2ab00b0c9a6f7fc3f60001522e}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N}~\hyperlink{notify_8h_a573475aa25c3d4707d4f3eb2bb01aff1}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T} -\/ \hyperlink{notify_8h_ab88c18a0674d6466c04a1f90be55fd1c}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N} -\/ 1 -\/ \hyperlink{notify_8h_a8abacded46f4d1f1036e165ad9936c6b}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N} -\/ 1
+\item 
+\#define \hyperlink{notify_8h_a634685d794b7a3108d1f753207c07379}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R}~3774347255
+\begin{DoxyCompactList}\small\item\em I\-P\-: 224.\-247.\-247.\-247. \end{DoxyCompactList}\item 
+\#define \hyperlink{notify_8h_a8d8c337fa570b0414d090ff9269f503b}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T}~24724
+\item 
+\#define \hyperlink{notify_8h_ac0d2d96a51ba47ac1a052a0b0e1f0fd1}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R}~'\textbackslash{}0'
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} \hyperlink{notify_8h_a00445229259739ea966a49fe509fe394}{notify\-\_\-packet\-\_\-t}
+\begin{DoxyCompactList}\small\item\em Container of packet. Contains only pointers to parts in external buffer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1}{notify\-\_\-code} \{ \\*
+\hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1acd1e01e84393b6b2c2986a5c774b467b}{notify\-\_\-error\-\_\-common} = -\/1, 
+\hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1af6d581a6b3b4333c9611da0a311713d6}{notify\-\_\-error\-\_\-allocation} = -\/2, 
+\hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ae438718540987bbfe2b785b4c29ddd50}{notify\-\_\-error\-\_\-bind} = -\/3, 
+\hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1a30a3682d2ea4775991b36591e8bb29bb}{notify\-\_\-error\-\_\-join} = -\/4, 
+\\*
+\hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ab462a87e64c5e30a0847a207e6141556}{notify\-\_\-error\-\_\-bad\-\_\-socket} = -\/5, 
+\hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1a83d99ad612074b626d332e0faee7bff4}{notify\-\_\-error\-\_\-timeout} = -\/6
+ \}
+\begin{DoxyCompactList}\small\item\em Return codes for each functions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+ssize\-\_\-t \hyperlink{notify_8h_a2e6b04804c69167294da3dacd635d3a7}{notify\-\_\-packet} (int socket\-\_\-fd, \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} packet)
+\begin{DoxyCompactList}\small\item\em Send notification packet. \end{DoxyCompactList}\item 
+ssize\-\_\-t \hyperlink{notify_8h_a673eb68a6e1068bc40946b5c36a0663d}{notify\-\_\-data} (int socket\-\_\-fd, const char $\ast$format, const char $\ast$title, const void $\ast$data, size\-\_\-t data\-\_\-size)
+\begin{DoxyCompactList}\small\item\em Send notification with raw data. Wraps it to \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} and sends. \end{DoxyCompactList}\item 
+ssize\-\_\-t \hyperlink{notify_8h_a1b9f611aea29b046ae81690f09fabd2b}{notify\-\_\-text} (int socket\-\_\-fd, const char $\ast$format, const char $\ast$title, const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em Send notification with textual data. \end{DoxyCompactList}\item 
+ssize\-\_\-t \hyperlink{notify_8h_ad4f4b6a31a18b422649482151f2f64c9}{notify\-\_\-local\-\_\-tcp\-\_\-service} (int socket\-\_\-fd, const char $\ast$service\-\_\-name, uint16\-\_\-t port)
+\begin{DoxyCompactList}\small\item\em Send notification of T\-C\-P service. \end{DoxyCompactList}\item 
+ssize\-\_\-t \hyperlink{notify_8h_a36cce10ad8296ac6a205d8ee2abcdfb0}{notify\-\_\-local\-\_\-udp\-\_\-service} (int socket\-\_\-fd, const char $\ast$service\-\_\-name, uint16\-\_\-t port)
+\begin{DoxyCompactList}\small\item\em Send notification of U\-D\-P service. \end{DoxyCompactList}\item 
+ssize\-\_\-t \hyperlink{notify_8h_ad378a2bde4dcc13be21c506e54041f3d}{notify\-\_\-setup\-\_\-listener} (int socket\-\_\-fd)
+\begin{DoxyCompactList}\small\item\em Setup U\-D\-P socket as multicast listener\-: bind, sets R\-E\-U\-S\-E\-\_\-\-A\-D\-D\-R and joins to multicast group. \end{DoxyCompactList}\item 
+ssize\-\_\-t \hyperlink{notify_8h_ab312ed2b44088179eccfd38261dd2219}{notify\-\_\-collect} (int socket\-\_\-fd, size\-\_\-t interval\-\_\-ms, char $\ast$buffer, size\-\_\-t buf\-\_\-size)
+\begin{DoxyCompactList}\small\item\em Collect first notification message till specified interval. \end{DoxyCompactList}\item 
+\hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} \hyperlink{notify_8h_ae7d9dc0c738af6542df8b22f24943136}{notify\-\_\-parse\-\_\-packet} (const char $\ast$buffer, size\-\_\-t size)
+\begin{DoxyCompactList}\small\item\em Parse notification message to \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} structure. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const size\-\_\-t \hyperlink{notify_8h_a5cc47976bf571a1ccbf18e1c01ad2427}{notify\-\_\-max\-\_\-format\-\_\-len} = \hyperlink{notify_8h_ab88c18a0674d6466c04a1f90be55fd1c}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N}
+\begin{DoxyCompactList}\small\item\em Maximum size in bytes of {\ttfamily format} field. \end{DoxyCompactList}\item 
+static const size\-\_\-t \hyperlink{notify_8h_adb2933e49b3f7988a74e758fb3ddde2a}{notify\-\_\-max\-\_\-title\-\_\-len} = \hyperlink{notify_8h_a8abacded46f4d1f1036e165ad9936c6b}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N}
+\begin{DoxyCompactList}\small\item\em Maximum size in bytes of {\ttfamily title} field. \end{DoxyCompactList}\item 
+static const size\-\_\-t \hyperlink{notify_8h_abfd9855ea25f9004f4d86f89afa3fb56}{notify\-\_\-max\-\_\-data\-\_\-len} = \hyperlink{notify_8h_a8e840f2ab00b0c9a6f7fc3f60001522e}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N}
+\begin{DoxyCompactList}\small\item\em Maximum size in bytes of payload. \end{DoxyCompactList}\item 
+static const size\-\_\-t \hyperlink{notify_8h_a93ef24df453d2291fead702d4e581ab8}{notify\-\_\-max\-\_\-packet\-\_\-size} = \hyperlink{notify_8h_a573475aa25c3d4707d4f3eb2bb01aff1}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T}
+\begin{DoxyCompactList}\small\item\em Maximum size in bytes of notification packet. \end{DoxyCompactList}\item 
+static const uint32\-\_\-t \hyperlink{notify_8h_a87823b4d85e77fb57eece48b1c3c96eb}{notify\-\_\-mcast\-\_\-address} = \hyperlink{notify_8h_a634685d794b7a3108d1f753207c07379}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R}
+\begin{DoxyCompactList}\small\item\em Multicast address for communication. \end{DoxyCompactList}\item 
+static const uint16\-\_\-t \hyperlink{notify_8h_a0849af99b989b49ac3fa073a0965f2dc}{notify\-\_\-mcast\-\_\-port} = \hyperlink{notify_8h_a8d8c337fa570b0414d090ff9269f503b}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T}
+\begin{DoxyCompactList}\small\item\em Port of multicast address for communication. \end{DoxyCompactList}\item 
+static const uint8\-\_\-t \hyperlink{notify_8h_a3e32decba707a42074ef8c35760517a3}{notify\-\_\-field\-\_\-delimiter} = \hyperlink{notify_8h_ac0d2d96a51ba47ac1a052a0b0e1f0fd1}{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R}
+\begin{DoxyCompactList}\small\item\em Delimiter between fields in packet. \end{DoxyCompactList}\item 
+static const char \hyperlink{notify_8h_a9a273cb4d462970b899cf2e7ca928651}{notify\-\_\-format\-\_\-tcp\-\_\-service} \mbox{[}$\,$\mbox{]} = \char`\"{}service.\-tcp\textbackslash{}0\char`\"{}
+\begin{DoxyCompactList}\small\item\em Predefined {\ttfamily format} for T\-C\-P service. \end{DoxyCompactList}\item 
+static const char \hyperlink{notify_8h_a842092596600cba1ac5059d3de202baa}{notify\-\_\-format\-\_\-udp\-\_\-service} \mbox{[}$\,$\mbox{]} = \char`\"{}service.\-udp\textbackslash{}0\char`\"{}
+\begin{DoxyCompactList}\small\item\em Predefined {\ttfamily format} for U\-D\-P service. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Notification on multicast U\-D\-P communication. \begin{DoxyAuthor}{Author}
+Red\-Dec \href{mailto:net.dev@mail.ru}{\tt net.\-dev@mail.\-ru} 
+\end{DoxyAuthor}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{notify_8h_ac0d2d96a51ba47ac1a052a0b0e1f0fd1}{\index{notify.\-h@{notify.\-h}!\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R}}
+\index{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R}!notify.h@{notify.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R~'\textbackslash{}0'}}\label{notify_8h_ac0d2d96a51ba47ac1a052a0b0e1f0fd1}
+\hypertarget{notify_8h_a8e840f2ab00b0c9a6f7fc3f60001522e}{\index{notify.\-h@{notify.\-h}!\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N}}
+\index{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N}!notify.h@{notify.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N~{\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T} -\/ {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N} -\/ 1 -\/ {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N} -\/ 1}}\label{notify_8h_a8e840f2ab00b0c9a6f7fc3f60001522e}
+\hypertarget{notify_8h_ab88c18a0674d6466c04a1f90be55fd1c}{\index{notify.\-h@{notify.\-h}!\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N}}
+\index{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N}!notify.h@{notify.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N~255}}\label{notify_8h_ab88c18a0674d6466c04a1f90be55fd1c}
+\hypertarget{notify_8h_a8abacded46f4d1f1036e165ad9936c6b}{\index{notify.\-h@{notify.\-h}!\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N}}
+\index{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N}!notify.h@{notify.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N~255}}\label{notify_8h_a8abacded46f4d1f1036e165ad9936c6b}
+\hypertarget{notify_8h_a634685d794b7a3108d1f753207c07379}{\index{notify.\-h@{notify.\-h}!\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R}}
+\index{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R}!notify.h@{notify.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R~3774347255}}\label{notify_8h_a634685d794b7a3108d1f753207c07379}
+
+
+I\-P\-: 224.\-247.\-247.\-247. 
+
+\hypertarget{notify_8h_a8d8c337fa570b0414d090ff9269f503b}{\index{notify.\-h@{notify.\-h}!\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T}}
+\index{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T}!notify.h@{notify.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T~24724}}\label{notify_8h_a8d8c337fa570b0414d090ff9269f503b}
+\hypertarget{notify_8h_a573475aa25c3d4707d4f3eb2bb01aff1}{\index{notify.\-h@{notify.\-h}!\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T}}
+\index{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T@{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T}!notify.h@{notify.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T~65500}}\label{notify_8h_a573475aa25c3d4707d4f3eb2bb01aff1}
+
+
+\subsection{Typedef Documentation}
+\hypertarget{notify_8h_a00445229259739ea966a49fe509fe394}{\index{notify.\-h@{notify.\-h}!notify\-\_\-packet\-\_\-t@{notify\-\_\-packet\-\_\-t}}
+\index{notify\-\_\-packet\-\_\-t@{notify\-\_\-packet\-\_\-t}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-packet\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf notify\-\_\-packet\-\_\-t}  {\bf notify\-\_\-packet\-\_\-t}}}\label{notify_8h_a00445229259739ea966a49fe509fe394}
+
+
+Container of packet. Contains only pointers to parts in external buffer. 
+
+
+
+\subsection{Enumeration Type Documentation}
+\hypertarget{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1}{\index{notify.\-h@{notify.\-h}!notify\-\_\-code@{notify\-\_\-code}}
+\index{notify\-\_\-code@{notify\-\_\-code}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-code}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf notify\-\_\-code}}}\label{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1}
+
+
+Return codes for each functions. 
+
+\begin{Desc}
+\item[Enumerator]\par
+\begin{description}
+\index{notify\-\_\-error\-\_\-common@{notify\-\_\-error\-\_\-common}!notify.\-h@{notify.\-h}}\index{notify.\-h@{notify.\-h}!notify\-\_\-error\-\_\-common@{notify\-\_\-error\-\_\-common}}\item[{\em 
+\hypertarget{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1acd1e01e84393b6b2c2986a5c774b467b}{notify\-\_\-error\-\_\-common}\label{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1acd1e01e84393b6b2c2986a5c774b467b}
+}]Common error. May be changed to more detailed code in future releases. \index{notify\-\_\-error\-\_\-allocation@{notify\-\_\-error\-\_\-allocation}!notify.\-h@{notify.\-h}}\index{notify.\-h@{notify.\-h}!notify\-\_\-error\-\_\-allocation@{notify\-\_\-error\-\_\-allocation}}\item[{\em 
+\hypertarget{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1af6d581a6b3b4333c9611da0a311713d6}{notify\-\_\-error\-\_\-allocation}\label{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1af6d581a6b3b4333c9611da0a311713d6}
+}]Can't allocate required memory. \index{notify\-\_\-error\-\_\-bind@{notify\-\_\-error\-\_\-bind}!notify.\-h@{notify.\-h}}\index{notify.\-h@{notify.\-h}!notify\-\_\-error\-\_\-bind@{notify\-\_\-error\-\_\-bind}}\item[{\em 
+\hypertarget{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ae438718540987bbfe2b785b4c29ddd50}{notify\-\_\-error\-\_\-bind}\label{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ae438718540987bbfe2b785b4c29ddd50}
+}]Can't bind U\-D\-P socket. \index{notify\-\_\-error\-\_\-join@{notify\-\_\-error\-\_\-join}!notify.\-h@{notify.\-h}}\index{notify.\-h@{notify.\-h}!notify\-\_\-error\-\_\-join@{notify\-\_\-error\-\_\-join}}\item[{\em 
+\hypertarget{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1a30a3682d2ea4775991b36591e8bb29bb}{notify\-\_\-error\-\_\-join}\label{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1a30a3682d2ea4775991b36591e8bb29bb}
+}]Can't join to multicast group. \index{notify\-\_\-error\-\_\-bad\-\_\-socket@{notify\-\_\-error\-\_\-bad\-\_\-socket}!notify.\-h@{notify.\-h}}\index{notify.\-h@{notify.\-h}!notify\-\_\-error\-\_\-bad\-\_\-socket@{notify\-\_\-error\-\_\-bad\-\_\-socket}}\item[{\em 
+\hypertarget{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ab462a87e64c5e30a0847a207e6141556}{notify\-\_\-error\-\_\-bad\-\_\-socket}\label{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ab462a87e64c5e30a0847a207e6141556}
+}]Can't use socket. Usually it was closed or created incorrectly. \index{notify\-\_\-error\-\_\-timeout@{notify\-\_\-error\-\_\-timeout}!notify.\-h@{notify.\-h}}\index{notify.\-h@{notify.\-h}!notify\-\_\-error\-\_\-timeout@{notify\-\_\-error\-\_\-timeout}}\item[{\em 
+\hypertarget{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1a83d99ad612074b626d332e0faee7bff4}{notify\-\_\-error\-\_\-timeout}\label{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1a83d99ad612074b626d332e0faee7bff4}
+}]Nothing received till specified time interval. \end{description}
+\end{Desc}
+
+
+\subsection{Function Documentation}
+\hypertarget{notify_8h_ab312ed2b44088179eccfd38261dd2219}{\index{notify.\-h@{notify.\-h}!notify\-\_\-collect@{notify\-\_\-collect}}
+\index{notify\-\_\-collect@{notify\-\_\-collect}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-collect}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-collect (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{size\-\_\-t}]{interval\-\_\-ms, }
+\item[{char $\ast$}]{buffer, }
+\item[{size\-\_\-t}]{buf\-\_\-size}
+\end{DoxyParamCaption}
+)}}\label{notify_8h_ab312ed2b44088179eccfd38261dd2219}
+
+
+Collect first notification message till specified interval. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
+\hline
+{\em interval\-\_\-ms} & Time interval in milliseconds. If nothing received {\ttfamily notify\-\_\-error\-\_\-timeout} will be returned \\
+\hline
+{\em buffer} & Buffer for incoming packet. More then {\ttfamily notify\-\_\-max\-\_\-packet\-\_\-size} is not required \\
+\hline
+{\em buf\-\_\-size} & Maximum buffer size for incoming packet \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ \hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ab462a87e64c5e30a0847a207e6141556}{notify\-\_\-error\-\_\-bad\-\_\-socket}, \hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1acd1e01e84393b6b2c2986a5c774b467b}{notify\-\_\-error\-\_\-common}, \hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1a83d99ad612074b626d332e0faee7bff4}{notify\-\_\-error\-\_\-timeout}, otherwise -\/ size of received packet 
+\end{DoxyReturn}
+\hypertarget{notify_8h_a673eb68a6e1068bc40946b5c36a0663d}{\index{notify.\-h@{notify.\-h}!notify\-\_\-data@{notify\-\_\-data}}
+\index{notify\-\_\-data@{notify\-\_\-data}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-data (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{const char $\ast$}]{format, }
+\item[{const char $\ast$}]{title, }
+\item[{const void $\ast$}]{data, }
+\item[{size\-\_\-t}]{data\-\_\-size}
+\end{DoxyParamCaption}
+)}}\label{notify_8h_a673eb68a6e1068bc40946b5c36a0663d}
+
+
+Send notification with raw data. Wraps it to \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} and sends. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
+\hline
+{\em format} & Packet format type. Can be used as small description of payload format \\
+\hline
+{\em title} & Head of packet content \\
+\hline
+{\em data`} & Payload content \\
+\hline
+{\em data\-\_\-size} & Payload content size. Can't be more then \hyperlink{notify_8h_abfd9855ea25f9004f4d86f89afa3fb56}{notify\-\_\-max\-\_\-data\-\_\-len} \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+same as \hyperlink{notify_8h_a2e6b04804c69167294da3dacd635d3a7}{notify\-\_\-packet} 
+\end{DoxyReturn}
+\hypertarget{notify_8h_ad4f4b6a31a18b422649482151f2f64c9}{\index{notify.\-h@{notify.\-h}!notify\-\_\-local\-\_\-tcp\-\_\-service@{notify\-\_\-local\-\_\-tcp\-\_\-service}}
+\index{notify\-\_\-local\-\_\-tcp\-\_\-service@{notify\-\_\-local\-\_\-tcp\-\_\-service}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-local\-\_\-tcp\-\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-local\-\_\-tcp\-\_\-service (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{const char $\ast$}]{service\-\_\-name, }
+\item[{uint16\-\_\-t}]{port}
+\end{DoxyParamCaption}
+)}}\label{notify_8h_ad4f4b6a31a18b422649482151f2f64c9}
+
+
+Send notification of T\-C\-P service. 
+
+Wraps it to \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} with format \hyperlink{notify_8h_a9a273cb4d462970b899cf2e7ca928651}{notify\-\_\-format\-\_\-tcp\-\_\-service} and sends.
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
+\hline
+{\em service\-\_\-name} & T\-C\-P logical service name \\
+\hline
+{\em port} & T\-C\-P listening service port \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+same as \hyperlink{notify_8h_a2e6b04804c69167294da3dacd635d3a7}{notify\-\_\-packet} 
+\end{DoxyReturn}
+\hypertarget{notify_8h_a36cce10ad8296ac6a205d8ee2abcdfb0}{\index{notify.\-h@{notify.\-h}!notify\-\_\-local\-\_\-udp\-\_\-service@{notify\-\_\-local\-\_\-udp\-\_\-service}}
+\index{notify\-\_\-local\-\_\-udp\-\_\-service@{notify\-\_\-local\-\_\-udp\-\_\-service}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-local\-\_\-udp\-\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-local\-\_\-udp\-\_\-service (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{const char $\ast$}]{service\-\_\-name, }
+\item[{uint16\-\_\-t}]{port}
+\end{DoxyParamCaption}
+)}}\label{notify_8h_a36cce10ad8296ac6a205d8ee2abcdfb0}
+
+
+Send notification of U\-D\-P service. 
+
+Wraps it to {\ttfamily \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t}} with format \hyperlink{notify_8h_a842092596600cba1ac5059d3de202baa}{notify\-\_\-format\-\_\-udp\-\_\-service} and sends.
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
+\hline
+{\em service\-\_\-name} & U\-D\-P logical service name \\
+\hline
+{\em port} & U\-D\-P listening service port \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ same as \hyperlink{notify_8h_a2e6b04804c69167294da3dacd635d3a7}{notify\-\_\-packet} 
+\end{DoxyReturn}
+\hypertarget{notify_8h_a2e6b04804c69167294da3dacd635d3a7}{\index{notify.\-h@{notify.\-h}!notify\-\_\-packet@{notify\-\_\-packet}}
+\index{notify\-\_\-packet@{notify\-\_\-packet}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-packet}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-packet (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{{\bf notify\-\_\-packet\-\_\-t}}]{packet}
+\end{DoxyParamCaption}
+)}}\label{notify_8h_a2e6b04804c69167294da3dacd635d3a7}
+
+
+Send notification packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
+\hline
+{\em packet} & notification packet \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ab462a87e64c5e30a0847a207e6141556}{notify\-\_\-error\-\_\-bad\-\_\-socket}, \hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1af6d581a6b3b4333c9611da0a311713d6}{notify\-\_\-error\-\_\-allocation}, -\/1 (on socket error) or sent bytes 
+\end{DoxyReturn}
+\hypertarget{notify_8h_ae7d9dc0c738af6542df8b22f24943136}{\index{notify.\-h@{notify.\-h}!notify\-\_\-parse\-\_\-packet@{notify\-\_\-parse\-\_\-packet}}
+\index{notify\-\_\-parse\-\_\-packet@{notify\-\_\-parse\-\_\-packet}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-parse\-\_\-packet}]{\setlength{\rightskip}{0pt plus 5cm}{\bf notify\-\_\-packet\-\_\-t} notify\-\_\-parse\-\_\-packet (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{buffer, }
+\item[{size\-\_\-t}]{size}
+\end{DoxyParamCaption}
+)}}\label{notify_8h_ae7d9dc0c738af6542df8b22f24943136}
+
+
+Parse notification message to \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buffer} & packet raw data \\
+\hline
+{\em size} & size of packet \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+notification structure. If some fields can't be parsed, they will be filled by N\-U\-L\-L 
+\end{DoxyReturn}
+\hypertarget{notify_8h_ad378a2bde4dcc13be21c506e54041f3d}{\index{notify.\-h@{notify.\-h}!notify\-\_\-setup\-\_\-listener@{notify\-\_\-setup\-\_\-listener}}
+\index{notify\-\_\-setup\-\_\-listener@{notify\-\_\-setup\-\_\-listener}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-setup\-\_\-listener}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-setup\-\_\-listener (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd}
+\end{DoxyParamCaption}
+)}}\label{notify_8h_ad378a2bde4dcc13be21c506e54041f3d}
+
+
+Setup U\-D\-P socket as multicast listener\-: bind, sets R\-E\-U\-S\-E\-\_\-\-A\-D\-D\-R and joins to multicast group. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ab462a87e64c5e30a0847a207e6141556}{notify\-\_\-error\-\_\-bad\-\_\-socket}, \hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1ae438718540987bbfe2b785b4c29ddd50}{notify\-\_\-error\-\_\-bind}, \hyperlink{notify_8h_a6834c0c35e1591ffa22c397623a7e1b1a30a3682d2ea4775991b36591e8bb29bb}{notify\-\_\-error\-\_\-join} otherwise 0 
+\end{DoxyReturn}
+\hypertarget{notify_8h_a1b9f611aea29b046ae81690f09fabd2b}{\index{notify.\-h@{notify.\-h}!notify\-\_\-text@{notify\-\_\-text}}
+\index{notify\-\_\-text@{notify\-\_\-text}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-text (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{const char $\ast$}]{format, }
+\item[{const char $\ast$}]{title, }
+\item[{const char $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{notify_8h_a1b9f611aea29b046ae81690f09fabd2b}
+
+
+Send notification with textual data. 
+
+Wraps it to \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} and sends. Content size determinated by strnlen() and can't be more then \hyperlink{notify_8h_abfd9855ea25f9004f4d86f89afa3fb56}{notify\-\_\-max\-\_\-data\-\_\-len}
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
+\hline
+{\em format} & Packet format type. Can be used as small description of payload format \\
+\hline
+{\em title} & Head of packet content \\
+\hline
+{\em text} & Payload text content \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+same as \hyperlink{notify_8h_a2e6b04804c69167294da3dacd635d3a7}{notify\-\_\-packet} 
+\end{DoxyReturn}
+
+
+\subsection{Variable Documentation}
+\hypertarget{notify_8h_a3e32decba707a42074ef8c35760517a3}{\index{notify.\-h@{notify.\-h}!notify\-\_\-field\-\_\-delimiter@{notify\-\_\-field\-\_\-delimiter}}
+\index{notify\-\_\-field\-\_\-delimiter@{notify\-\_\-field\-\_\-delimiter}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-field\-\_\-delimiter}]{\setlength{\rightskip}{0pt plus 5cm}const uint8\-\_\-t notify\-\_\-field\-\_\-delimiter = {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-F\-I\-E\-L\-D\-\_\-\-D\-E\-L\-I\-M\-I\-T\-E\-R}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_a3e32decba707a42074ef8c35760517a3}
+
+
+Delimiter between fields in packet. 
+
+\hypertarget{notify_8h_a9a273cb4d462970b899cf2e7ca928651}{\index{notify.\-h@{notify.\-h}!notify\-\_\-format\-\_\-tcp\-\_\-service@{notify\-\_\-format\-\_\-tcp\-\_\-service}}
+\index{notify\-\_\-format\-\_\-tcp\-\_\-service@{notify\-\_\-format\-\_\-tcp\-\_\-service}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-format\-\_\-tcp\-\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}const char notify\-\_\-format\-\_\-tcp\-\_\-service\mbox{[}$\,$\mbox{]} = \char`\"{}service.\-tcp\textbackslash{}0\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_a9a273cb4d462970b899cf2e7ca928651}
+
+
+Predefined {\ttfamily format} for T\-C\-P service. 
+
+\hypertarget{notify_8h_a842092596600cba1ac5059d3de202baa}{\index{notify.\-h@{notify.\-h}!notify\-\_\-format\-\_\-udp\-\_\-service@{notify\-\_\-format\-\_\-udp\-\_\-service}}
+\index{notify\-\_\-format\-\_\-udp\-\_\-service@{notify\-\_\-format\-\_\-udp\-\_\-service}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-format\-\_\-udp\-\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}const char notify\-\_\-format\-\_\-udp\-\_\-service\mbox{[}$\,$\mbox{]} = \char`\"{}service.\-udp\textbackslash{}0\char`\"{}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_a842092596600cba1ac5059d3de202baa}
+
+
+Predefined {\ttfamily format} for U\-D\-P service. 
+
+\hypertarget{notify_8h_abfd9855ea25f9004f4d86f89afa3fb56}{\index{notify.\-h@{notify.\-h}!notify\-\_\-max\-\_\-data\-\_\-len@{notify\-\_\-max\-\_\-data\-\_\-len}}
+\index{notify\-\_\-max\-\_\-data\-\_\-len@{notify\-\_\-max\-\_\-data\-\_\-len}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-max\-\_\-data\-\_\-len}]{\setlength{\rightskip}{0pt plus 5cm}const size\-\_\-t notify\-\_\-max\-\_\-data\-\_\-len = {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-D\-A\-T\-A\-\_\-\-L\-E\-N}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_abfd9855ea25f9004f4d86f89afa3fb56}
+
+
+Maximum size in bytes of payload. 
+
+\hypertarget{notify_8h_a5cc47976bf571a1ccbf18e1c01ad2427}{\index{notify.\-h@{notify.\-h}!notify\-\_\-max\-\_\-format\-\_\-len@{notify\-\_\-max\-\_\-format\-\_\-len}}
+\index{notify\-\_\-max\-\_\-format\-\_\-len@{notify\-\_\-max\-\_\-format\-\_\-len}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-max\-\_\-format\-\_\-len}]{\setlength{\rightskip}{0pt plus 5cm}const size\-\_\-t notify\-\_\-max\-\_\-format\-\_\-len = {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-F\-O\-R\-M\-A\-T\-\_\-\-L\-E\-N}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_a5cc47976bf571a1ccbf18e1c01ad2427}
+
+
+Maximum size in bytes of {\ttfamily format} field. 
+
+\hypertarget{notify_8h_a93ef24df453d2291fead702d4e581ab8}{\index{notify.\-h@{notify.\-h}!notify\-\_\-max\-\_\-packet\-\_\-size@{notify\-\_\-max\-\_\-packet\-\_\-size}}
+\index{notify\-\_\-max\-\_\-packet\-\_\-size@{notify\-\_\-max\-\_\-packet\-\_\-size}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-max\-\_\-packet\-\_\-size}]{\setlength{\rightskip}{0pt plus 5cm}const size\-\_\-t notify\-\_\-max\-\_\-packet\-\_\-size = {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-P\-A\-C\-K\-E\-T\-\_\-\-L\-I\-M\-I\-T}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_a93ef24df453d2291fead702d4e581ab8}
+
+
+Maximum size in bytes of notification packet. 
+
+\hypertarget{notify_8h_adb2933e49b3f7988a74e758fb3ddde2a}{\index{notify.\-h@{notify.\-h}!notify\-\_\-max\-\_\-title\-\_\-len@{notify\-\_\-max\-\_\-title\-\_\-len}}
+\index{notify\-\_\-max\-\_\-title\-\_\-len@{notify\-\_\-max\-\_\-title\-\_\-len}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-max\-\_\-title\-\_\-len}]{\setlength{\rightskip}{0pt plus 5cm}const size\-\_\-t notify\-\_\-max\-\_\-title\-\_\-len = {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-A\-X\-\_\-\-T\-I\-T\-L\-E\-\_\-\-L\-E\-N}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_adb2933e49b3f7988a74e758fb3ddde2a}
+
+
+Maximum size in bytes of {\ttfamily title} field. 
+
+\hypertarget{notify_8h_a87823b4d85e77fb57eece48b1c3c96eb}{\index{notify.\-h@{notify.\-h}!notify\-\_\-mcast\-\_\-address@{notify\-\_\-mcast\-\_\-address}}
+\index{notify\-\_\-mcast\-\_\-address@{notify\-\_\-mcast\-\_\-address}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-mcast\-\_\-address}]{\setlength{\rightskip}{0pt plus 5cm}const uint32\-\_\-t notify\-\_\-mcast\-\_\-address = {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-A\-D\-D\-R}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_a87823b4d85e77fb57eece48b1c3c96eb}
+
+
+Multicast address for communication. 
+
+\hypertarget{notify_8h_a0849af99b989b49ac3fa073a0965f2dc}{\index{notify.\-h@{notify.\-h}!notify\-\_\-mcast\-\_\-port@{notify\-\_\-mcast\-\_\-port}}
+\index{notify\-\_\-mcast\-\_\-port@{notify\-\_\-mcast\-\_\-port}!notify.h@{notify.\-h}}
+\subsubsection[{notify\-\_\-mcast\-\_\-port}]{\setlength{\rightskip}{0pt plus 5cm}const uint16\-\_\-t notify\-\_\-mcast\-\_\-port = {\bf \-\_\-\-\_\-\-N\-O\-T\-I\-F\-Y\-\_\-\-M\-C\-A\-S\-T\-\_\-\-P\-O\-R\-T}\hspace{0.3cm}{\ttfamily [static]}}}\label{notify_8h_a0849af99b989b49ac3fa073a0965f2dc}
+
+
+Port of multicast address for communication. 
+

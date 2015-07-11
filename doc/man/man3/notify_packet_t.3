@@ -1,0 +1,58 @@
+.TH "notify_packet_t" 3 "Sun Jul 12 2015" "Notify" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+notify_packet_t \- 
+.PP
+Container of packet\&. Contains only pointers to parts in external buffer\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <notify\&.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBformat\fP"
+.br
+.RI "\fIFirst element of \fCformat\fP field\&. May be NULL\&. \fP"
+.ti -1c
+.RI "const char * \fBtitle\fP"
+.br
+.RI "\fIFirst element of \fCtitle\fP field\&. May be NULL\&. \fP"
+.ti -1c
+.RI "const char * \fBdata\fP"
+.br
+.RI "\fIFirst element of payload\&. May be NULL\&. \fP"
+.ti -1c
+.RI "size_t \fBdata_size\fP"
+.br
+.RI "\fIPayload size\&. May be 0\&. Can't be more then \fCnotify_max_data_len\fP \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Container of packet\&. Contains only pointers to parts in external buffer\&. 
+.SH "Field Documentation"
+.PP 
+.SS "const char* notify_packet_t::data"
+
+.PP
+First element of payload\&. May be NULL\&. 
+.SS "size_t notify_packet_t::data_size"
+
+.PP
+Payload size\&. May be 0\&. Can't be more then \fCnotify_max_data_len\fP 
+.SS "const char* notify_packet_t::format"
+
+.PP
+First element of \fCformat\fP field\&. May be NULL\&. 
+.SS "const char* notify_packet_t::title"
+
+.PP
+First element of \fCtitle\fP field\&. May be NULL\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Notify from the source code\&.

@@ -1,0 +1,122 @@
+\hypertarget{notify_8c}{\section{notify.\-c File Reference}
+\label{notify_8c}\index{notify.\-c@{notify.\-c}}
+}
+{\ttfamily \#include \char`\"{}notify.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$sys/socket.\-h$>$}\\*
+{\ttfamily \#include $<$netinet/in.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$unistd.\-h$>$}\\*
+{\ttfamily \#include $<$errno.\-h$>$}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+ssize\-\_\-t \hyperlink{notify_8c_a8dfe7affed0c2f9ddd9b42b29cb7aaa6}{notify\-\_\-packet} (int socket\-\_\-fd, \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} pack)
+\begin{DoxyCompactList}\small\item\em Send notification packet. \end{DoxyCompactList}\item 
+ssize\-\_\-t \hyperlink{notify_8c_a673eb68a6e1068bc40946b5c36a0663d}{notify\-\_\-data} (int socket\-\_\-fd, const char $\ast$format, const char $\ast$title, const void $\ast$data, size\-\_\-t data\-\_\-size)
+\item 
+ssize\-\_\-t \hyperlink{notify_8c_a1b9f611aea29b046ae81690f09fabd2b}{notify\-\_\-text} (int socket\-\_\-fd, const char $\ast$format, const char $\ast$title, const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em Send notification with textual data. Wraps it to {\ttfamily \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t}} and sends. \end{DoxyCompactList}\item 
+ssize\-\_\-t \hyperlink{notify_8c_ad4f4b6a31a18b422649482151f2f64c9}{notify\-\_\-local\-\_\-tcp\-\_\-service} (int socket\-\_\-fd, const char $\ast$service\-\_\-name, uint16\-\_\-t port)
+\item 
+ssize\-\_\-t \hyperlink{notify_8c_a36cce10ad8296ac6a205d8ee2abcdfb0}{notify\-\_\-local\-\_\-udp\-\_\-service} (int socket\-\_\-fd, const char $\ast$service\-\_\-name, uint16\-\_\-t port)
+\item 
+ssize\-\_\-t \hyperlink{notify_8c_a0826a77bb3b67452b74c6001de10b61c}{notify\-\_\-setup\-\_\-listener} (int sock)
+\item 
+ssize\-\_\-t \hyperlink{notify_8c_ab312ed2b44088179eccfd38261dd2219}{notify\-\_\-collect} (int socket\-\_\-fd, size\-\_\-t interval\-\_\-ms, char $\ast$buffer, size\-\_\-t buf\-\_\-size)
+\item 
+\hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t} \hyperlink{notify_8c_ae7d9dc0c738af6542df8b22f24943136}{notify\-\_\-parse\-\_\-packet} (const char $\ast$buffer, size\-\_\-t size)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\hypertarget{notify_8c_ab312ed2b44088179eccfd38261dd2219}{\index{notify.\-c@{notify.\-c}!notify\-\_\-collect@{notify\-\_\-collect}}
+\index{notify\-\_\-collect@{notify\-\_\-collect}!notify.c@{notify.\-c}}
+\subsubsection[{notify\-\_\-collect}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-collect (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{size\-\_\-t}]{interval\-\_\-ms, }
+\item[{char $\ast$}]{buffer, }
+\item[{size\-\_\-t}]{buf\-\_\-size}
+\end{DoxyParamCaption}
+)}}\label{notify_8c_ab312ed2b44088179eccfd38261dd2219}
+\hypertarget{notify_8c_a673eb68a6e1068bc40946b5c36a0663d}{\index{notify.\-c@{notify.\-c}!notify\-\_\-data@{notify\-\_\-data}}
+\index{notify\-\_\-data@{notify\-\_\-data}!notify.c@{notify.\-c}}
+\subsubsection[{notify\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-data (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{const char $\ast$}]{format, }
+\item[{const char $\ast$}]{title, }
+\item[{const void $\ast$}]{data, }
+\item[{size\-\_\-t}]{data\-\_\-size}
+\end{DoxyParamCaption}
+)}}\label{notify_8c_a673eb68a6e1068bc40946b5c36a0663d}
+\hypertarget{notify_8c_ad4f4b6a31a18b422649482151f2f64c9}{\index{notify.\-c@{notify.\-c}!notify\-\_\-local\-\_\-tcp\-\_\-service@{notify\-\_\-local\-\_\-tcp\-\_\-service}}
+\index{notify\-\_\-local\-\_\-tcp\-\_\-service@{notify\-\_\-local\-\_\-tcp\-\_\-service}!notify.c@{notify.\-c}}
+\subsubsection[{notify\-\_\-local\-\_\-tcp\-\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-local\-\_\-tcp\-\_\-service (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{const char $\ast$}]{service\-\_\-name, }
+\item[{uint16\-\_\-t}]{port}
+\end{DoxyParamCaption}
+)}}\label{notify_8c_ad4f4b6a31a18b422649482151f2f64c9}
+\hypertarget{notify_8c_a36cce10ad8296ac6a205d8ee2abcdfb0}{\index{notify.\-c@{notify.\-c}!notify\-\_\-local\-\_\-udp\-\_\-service@{notify\-\_\-local\-\_\-udp\-\_\-service}}
+\index{notify\-\_\-local\-\_\-udp\-\_\-service@{notify\-\_\-local\-\_\-udp\-\_\-service}!notify.c@{notify.\-c}}
+\subsubsection[{notify\-\_\-local\-\_\-udp\-\_\-service}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-local\-\_\-udp\-\_\-service (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{const char $\ast$}]{service\-\_\-name, }
+\item[{uint16\-\_\-t}]{port}
+\end{DoxyParamCaption}
+)}}\label{notify_8c_a36cce10ad8296ac6a205d8ee2abcdfb0}
+\hypertarget{notify_8c_a8dfe7affed0c2f9ddd9b42b29cb7aaa6}{\index{notify.\-c@{notify.\-c}!notify\-\_\-packet@{notify\-\_\-packet}}
+\index{notify\-\_\-packet@{notify\-\_\-packet}!notify.c@{notify.\-c}}
+\subsubsection[{notify\-\_\-packet}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-packet (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{{\bf notify\-\_\-packet\-\_\-t}}]{packet}
+\end{DoxyParamCaption}
+)}}\label{notify_8c_a8dfe7affed0c2f9ddd9b42b29cb7aaa6}
+
+
+Send notification packet. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
+\hline
+{\em packet} & notification packet \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+notify\-\_\-error\-\_\-bad\-\_\-socket, notify\-\_\-error\-\_\-allocation, -\/1 (on socket error) or sent bytes 
+\end{DoxyReturn}
+\hypertarget{notify_8c_ae7d9dc0c738af6542df8b22f24943136}{\index{notify.\-c@{notify.\-c}!notify\-\_\-parse\-\_\-packet@{notify\-\_\-parse\-\_\-packet}}
+\index{notify\-\_\-parse\-\_\-packet@{notify\-\_\-parse\-\_\-packet}!notify.c@{notify.\-c}}
+\subsubsection[{notify\-\_\-parse\-\_\-packet}]{\setlength{\rightskip}{0pt plus 5cm}{\bf notify\-\_\-packet\-\_\-t} notify\-\_\-parse\-\_\-packet (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{buffer, }
+\item[{size\-\_\-t}]{size}
+\end{DoxyParamCaption}
+)}}\label{notify_8c_ae7d9dc0c738af6542df8b22f24943136}
+\hypertarget{notify_8c_a0826a77bb3b67452b74c6001de10b61c}{\index{notify.\-c@{notify.\-c}!notify\-\_\-setup\-\_\-listener@{notify\-\_\-setup\-\_\-listener}}
+\index{notify\-\_\-setup\-\_\-listener@{notify\-\_\-setup\-\_\-listener}!notify.c@{notify.\-c}}
+\subsubsection[{notify\-\_\-setup\-\_\-listener}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-setup\-\_\-listener (
+\begin{DoxyParamCaption}
+\item[{int}]{sock}
+\end{DoxyParamCaption}
+)}}\label{notify_8c_a0826a77bb3b67452b74c6001de10b61c}
+\hypertarget{notify_8c_a1b9f611aea29b046ae81690f09fabd2b}{\index{notify.\-c@{notify.\-c}!notify\-\_\-text@{notify\-\_\-text}}
+\index{notify\-\_\-text@{notify\-\_\-text}!notify.c@{notify.\-c}}
+\subsubsection[{notify\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}ssize\-\_\-t notify\-\_\-text (
+\begin{DoxyParamCaption}
+\item[{int}]{socket\-\_\-fd, }
+\item[{const char $\ast$}]{format, }
+\item[{const char $\ast$}]{title, }
+\item[{const char $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{notify_8c_a1b9f611aea29b046ae81690f09fabd2b}
+
+
+Send notification with textual data. Wraps it to {\ttfamily \hyperlink{structnotify__packet__t}{notify\-\_\-packet\-\_\-t}} and sends. 
+
