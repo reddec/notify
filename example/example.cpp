@@ -7,37 +7,54 @@
 int main(int argc, char **argv) {
     if (argc > 1) {
         //! [Send data from console]
-        char title[__NOTIFY_MAX_TITLE_LEN];                        // Allocate buffer for `title` field
-        char format[__NOTIFY_MAX_FORMAT_LEN];                      // Allocate buffer for `format` field
-        char data[__NOTIFY_MAX_DATA_LEN];                          // Allocate buffer for `payload
+        // Allocate buffer for `title` field
+        char title[__NOTIFY_MAX_TITLE_LEN];
+        // Allocate buffer for `format` field
+        char format[__NOTIFY_MAX_FORMAT_LEN];
+        // Allocate buffer for `payload
+        char data[__NOTIFY_MAX_DATA_LEN];
         std::cout << "Format: ";
-        std::cin >> format;                                        // Read `format` from stdin (console input)
+        // Read `format` from stdin (console input)
+        std::cin >> format;
         std::cout << "Title: ";
-        std::cin >> title;                                         // Read `title` from stdin (console input)
+        // Read `title` from stdin (console input)
+        std::cin >> title;
         std::cout << "Data: ";
-        std::cin >> data;                                          // Read payload from stdin (console input)
-        int sender = socket(AF_INET, SOCK_DGRAM, 0);               // Create UDP socket
-        ssize_t bytes = notify_text(sender, format, title, data);  // Send notification (as text)
+        // Read payload from stdin (console input)
+        std::cin >> data;
+        // Create UDP socket
+        int sender = socket(AF_INET, SOCK_DGRAM, 0);
+        // Send notification (as text)
+        ssize_t bytes = notify_text(sender, format, title, data);
         std::clog << "Sent " << bytes << " bytes" << std::endl;
-        close(sender);                                             // Close socket
+        // Close socket
+        close(sender);
         //! [Send data from console]
     } else {
         //! [Receive data]
-        char buffer[__NOTIFY_PACKET_LIMIT];                                                 // Allocate buffer for packet
+        // Allocate buffer for packet
+        char buffer[__NOTIFY_PACKET_LIMIT];
         ssize_t pack_size;
-        size_t tm_ms = 5000;                                                                // Set timeout (5 seconds)
-        int listener = socket(AF_INET, SOCK_DGRAM, 0);                                      // Create UDP socket
-        notify_setup_listener(listener);                                                    // Prepare socket
-        while ((pack_size = notify_collect(listener, tm_ms, buffer, sizeof(buffer))) > 0) { // Read one packet
+        // Set timeout (5 seconds)
+        size_t tm_ms = 5000;
+        // Create UDP socket
+        int listener = socket(AF_INET, SOCK_DGRAM, 0);
+        // Prepare socket
+        notify_setup_listener(listener);
+        // Read one by one packet till timeout exception or internal socket error
+        while ((pack_size = notify_collect(listener, tm_ms, buffer, sizeof(buffer))) > 0) {
             std::cout << "Packet size: " << pack_size << std::endl;
-            notify_packet_t pp = notify_parse_packet(buffer, pack_size);                    // Parse packet to structure
+            // Parse packet to structure
+            notify_packet_t pp = notify_parse_packet(buffer, pack_size);
             std::cout << "Format: ";
-            if (pp.format != NULL)                                                          // Check field `format`
+            // Check field `format`. If packet not contains this filed (or it has incorrect end symbol), it will be NULL
+            if (pp.format != NULL)
                 std::cout << pp.format << std::endl;
             else
                 std::cout << "<no format field>" << std::endl;
             std::cout << "Title: ";
-            if (pp.title != NULL)                                                           // Check field `title`
+            // Check field `title`. If packet not contains this filed (or it has incorrect end symbol), it will be NULL
+            if (pp.title != NULL)
                 std::cout << pp.title << std::endl;
             else
                 std::cout << "<no title field>" << std::endl;
@@ -45,7 +62,8 @@ int main(int argc, char **argv) {
             std::cout.write(pp.data, pp.data_size);
             std::cout << std::endl;
         }
-        close(listener);                                                                    // Close socket
+        // Close socket
+        close(listener);
         //! [Receive data]
     }
     return 0;
