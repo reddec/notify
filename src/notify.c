@@ -10,16 +10,16 @@
 #include <unistd.h>
 #include <errno.h>
 
+uint32_t notify_utils_ip(uint16_t channel) {
+    uint8_t bin_addr[sizeof(notify_mcast_base_addr)];
+    memcpy(bin_addr, notify_mcast_base_addr, sizeof(notify_mcast_base_addr));
+    channel = htons(channel);
+    bin_addr[1] = ((uint8_t *) &channel)[0];
+    bin_addr[2] = ((uint8_t *) &channel)[1];
+    return *((uint32_t *) bin_addr);
+}
+
 ssize_t notify_packet(int socket_fd, notify_packet_t pack) {
-    static struct sockaddr_in destination = {
-            .sin_addr.s_addr = 0,
-            .sin_port=0,
-            .sin_family=AF_INET
-    };
-    if (destination.sin_addr.s_addr == 0) {
-        destination.sin_port = htons(__NOTIFY_MCAST_PORT);
-        destination.sin_addr.s_addr = htonl(__NOTIFY_MCAST_ADDR);
-    }
     if (socket_fd < 0)
         return notify_error_bad_socket;
     size_t f_sz = strnlen(pack.format, notify_max_format_len);
@@ -34,9 +34,7 @@ ssize_t notify_packet(int socket_fd, notify_packet_t pack) {
     memcpy(&packet[f_sz + 1], pack.title, t_sz);
     packet[f_sz + 1 + t_sz] = notify_field_delimiter;
     memcpy(&packet[f_sz + 1 + t_sz + 1], pack.data, data_size);
-    ssize_t response = sendto(socket_fd, packet, packet_size, 0, (const struct sockaddr *) &destination,
-                              sizeof(destination));
-
+    ssize_t response = send(socket_fd, packet, packet_size, 0);
     free(packet);
     return response;
 
@@ -68,16 +66,15 @@ ssize_t notify_local_udp_service(int socket_fd, const char *service_name, uint16
     return notify_text(socket_fd, notify_format_udp_service, service_name, buf);
 }
 
-ssize_t notify_setup_listener(int sock) {
+ssize_t notify_setup_listener(int sock, uint16_t channel, uint16_t port) {
     if (sock < 0)
         return notify_error_bad_socket;
     int set_option_on = 1;
     setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char *) &set_option_on, sizeof(set_option_on));
 
     struct sockaddr_in addr;
-
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    addr.sin_port = htons(__NOTIFY_MCAST_PORT);
+    addr.sin_port = htons(port);
     addr.sin_family = AF_INET;
     if (bind(sock, (const struct sockaddr *) &addr, sizeof(addr)) == -1) {
         close(sock);
@@ -85,7 +82,7 @@ ssize_t notify_setup_listener(int sock) {
     }
     //Join to multicast group
     struct ip_mreq mreq;
-    mreq.imr_multiaddr.s_addr = htonl(__NOTIFY_MCAST_ADDR);
+    mreq.imr_multiaddr.s_addr = notify_utils_ip(channel);
     mreq.imr_interface.s_addr = htonl(INADDR_ANY);
     if (setsockopt(sock, IPPROTO_IP, IP_ADD_MEMBERSHIP, &mreq, sizeof(mreq)) < 0) {
         close(sock);
@@ -131,4 +128,14 @@ notify_packet_t notify_parse_packet(const char *buffer, size_t size) {
         }
     }
     return result;
+}
+
+ssize_t notify_setup_emitter(int socket_fd, uint16_t channel, uint16_t port) {
+    if (socket_fd < 0) return notify_error_bad_socket;
+    struct sockaddr_in destination = {
+            .sin_addr.s_addr = notify_utils_ip(channel),
+            .sin_port=htons(port),
+            .sin_family=AF_INET
+    };
+    return connect(socket_fd, (struct sockaddr *) &destination, sizeof(destination));
 }

@@ -22,8 +22,6 @@
 #define __NOTIFY_MAX_TITLE_LEN 255
 #define __NOTIFY_PACKET_LIMIT 65500
 #define __NOTIFY_MAX_DATA_LEN __NOTIFY_PACKET_LIMIT - __NOTIFY_MAX_FORMAT_LEN - 1 - __NOTIFY_MAX_TITLE_LEN - 1
-#define __NOTIFY_MCAST_ADDR 3774347255 ///< IP: 224.247.247.247
-#define __NOTIFY_MCAST_PORT 24724
 #define __NOTIFY_FIELD_DELIMITER '\0'
 
 #include <stdint.h>
@@ -43,8 +41,7 @@ static const size_t notify_max_format_len = __NOTIFY_MAX_FORMAT_LEN;     ///< Ma
 static const size_t notify_max_title_len = __NOTIFY_MAX_TITLE_LEN;       ///< Maximum size in bytes of `title` field
 static const size_t notify_max_data_len = __NOTIFY_MAX_DATA_LEN;         ///< Maximum size in bytes of payload
 static const size_t notify_max_packet_size = __NOTIFY_PACKET_LIMIT;      ///< Maximum size in bytes of notification packet
-static const uint32_t notify_mcast_address = __NOTIFY_MCAST_ADDR;        ///< Multicast address for communication
-static const uint16_t notify_mcast_port = __NOTIFY_MCAST_PORT;           ///< Port of multicast address for communication
+static const uint8_t notify_mcast_base_addr[] = {224, 0, 0, 224};        ///< Base multicast address for communication
 static const uint8_t notify_field_delimiter = __NOTIFY_FIELD_DELIMITER;  ///< Delimiter between fields in packet
 static const char notify_format_tcp_service[] = "service.tcp\0";         ///< Predefined `format` for TCP service
 static const char notify_format_udp_service[] = "service.udp\0";         ///< Predefined `format` for UDP service
@@ -124,9 +121,20 @@ ssize_t notify_local_udp_service(int socket_fd, const char *service_name, uint16
 /**
 \brief Setup UDP socket as multicast listener: bind, sets REUSE_ADDR and joins to multicast group.
 \param socket_fd    UDP socket descriptor
+\param channel      Logical channel number from 0 - 65535
+\param port         Socket port number
 \return  #notify_error_bad_socket, #notify_error_bind, #notify_error_join otherwise 0
  */
-ssize_t notify_setup_listener(int socket_fd);
+ssize_t notify_setup_listener(int socket_fd, uint16_t channel, uint16_t port);
+
+/**
+\brief Setup UDP socket as multicast sender: connect() to multicast group.
+\param socket_fd    UDP socket descriptor
+\param channel      Logical channel number from 0 - 65535
+\param port         Socket port number
+\return  #notify_error_bad_socket, internal socket error otherwise 0
+ */
+ssize_t notify_setup_emitter(int socket_fd, uint16_t channel, uint16_t port);
 
 /**
 \brief Collect first notification message till specified interval

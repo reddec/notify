@@ -24,6 +24,7 @@ int main(int argc, char **argv) {
         std::cin >> data;
         // Create UDP socket
         int sender = socket(AF_INET, SOCK_DGRAM, 0);
+        notify_setup_emitter(sender, 0, 19999);
         // Send notification (as text)
         ssize_t bytes = notify_text(sender, format, title, data);
         std::clog << "Sent " << bytes << " bytes" << std::endl;
@@ -40,7 +41,7 @@ int main(int argc, char **argv) {
         // Create UDP socket
         int listener = socket(AF_INET, SOCK_DGRAM, 0);
         // Prepare socket
-        notify_setup_listener(listener);
+        notify_setup_listener(listener, 0, 19999);
         // Read one by one packet till timeout exception or internal socket error
         while ((pack_size = notify_collect(listener, tm_ms, buffer, sizeof(buffer))) > 0) {
             std::cout << "Packet size: " << pack_size << std::endl;
