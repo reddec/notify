@@ -147,8 +147,56 @@ Notification on multicast UDP communication\&.
 .PP
 \fBAuthor:\fP
 .RS 4
-RedDec net.dev@mail.ru 
+RedDec net.dev@mail.ru
 .RE
+.PP
+Send example:
+.PP
+.PP
+.nf
+        char title[__NOTIFY_MAX_TITLE_LEN];                        // Allocate buffer for `title` field
+        char format[__NOTIFY_MAX_FORMAT_LEN];                      // Allocate buffer for `format` field
+        char data[__NOTIFY_MAX_DATA_LEN];                          // Allocate buffer for `payload
+        std::cout << "Format: ";
+        std::cin >> format;                                        // Read `format` from stdin (console input)
+        std::cout << "Title: ";
+        std::cin >> title;                                         // Read `title` from stdin (console input)
+        std::cout << "Data: ";
+        std::cin >> data;                                          // Read payload from stdin (console input)
+        int sender = socket(AF_INET, SOCK_DGRAM, 0);               // Create UDP socket
+        ssize_t bytes = notify_text(sender, format, title, data);  // Send notification (as text)
+        std::clog << "Sent " << bytes << " bytes" << std::endl;
+        close(sender);                                             // Close socket
+.fi
+.PP
+ Receive example
+.PP
+.PP
+.nf
+        char buffer[__NOTIFY_PACKET_LIMIT];                                                 // Allocate buffer for packet
+        ssize_t pack_size;
+        size_t tm_ms = 5000;                                                                // Set timeout (5 seconds)
+        int listener = socket(AF_INET, SOCK_DGRAM, 0);                                      // Create UDP socket
+        notify_setup_listener(listener);                                                    // Prepare socket
+        while ((pack_size = notify_collect(listener, tm_ms, buffer, sizeof(buffer))) > 0) { // Read one packet
+            std::cout << "Packet size: " << pack_size << std::endl;
+            notify_packet_t pp = notify_parse_packet(buffer, pack_size);                    // Parse packet to structure
+            std::cout << "Format: ";
+            if (pp\&.format != NULL)                                                          // Check field `format`
+                std::cout << pp\&.format << std::endl;
+            else
+                std::cout << "<no format field>" << std::endl;
+            std::cout << "Title: ";
+            if (pp\&.title != NULL)                                                           // Check field `title`
+                std::cout << pp\&.title << std::endl;
+            else
+                std::cout << "<no title field>" << std::endl;
+            std::cout << "Data (" << pp\&.data_size << " bytes): ";
+            std::cout\&.write(pp\&.data, pp\&.data_size);
+            std::cout << std::endl;
+        }
+        close(listener);                                                                    // Close socket
+.fi
 .PP
 
 .SH "Macro Definition Documentation"
@@ -207,7 +255,36 @@ Nothing received till specified time interval\&.
 .SS "ssize_t notify_collect (intsocket_fd, size_tinterval_ms, char *buffer, size_tbuf_size)"
 
 .PP
-Collect first notification message till specified interval\&. 
+Collect first notification message till specified interval\&. Receive example
+.PP
+.PP
+.nf
+        char buffer[__NOTIFY_PACKET_LIMIT];                                                 // Allocate buffer for packet
+        ssize_t pack_size;
+        size_t tm_ms = 5000;                                                                // Set timeout (5 seconds)
+        int listener = socket(AF_INET, SOCK_DGRAM, 0);                                      // Create UDP socket
+        notify_setup_listener(listener);                                                    // Prepare socket
+        while ((pack_size = notify_collect(listener, tm_ms, buffer, sizeof(buffer))) > 0) { // Read one packet
+            std::cout << "Packet size: " << pack_size << std::endl;
+            notify_packet_t pp = notify_parse_packet(buffer, pack_size);                    // Parse packet to structure
+            std::cout << "Format: ";
+            if (pp\&.format != NULL)                                                          // Check field `format`
+                std::cout << pp\&.format << std::endl;
+            else
+                std::cout << "<no format field>" << std::endl;
+            std::cout << "Title: ";
+            if (pp\&.title != NULL)                                                           // Check field `title`
+                std::cout << pp\&.title << std::endl;
+            else
+                std::cout << "<no title field>" << std::endl;
+            std::cout << "Data (" << pp\&.data_size << " bytes): ";
+            std::cout\&.write(pp\&.data, pp\&.data_size);
+            std::cout << std::endl;
+        }
+        close(listener);                                                                    // Close socket
+.fi
+.PP
+ 
 .PP
 \fBParameters:\fP
 .RS 4

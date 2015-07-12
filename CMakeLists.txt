@@ -3,13 +3,30 @@ project(nottingham)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -pedantic")
 
-add_library(notify SHARED notify.c)
-add_library(notify_static STATIC notify.c)
+add_custom_target(man ALL)
+
+add_custom_command(
+  TARGET man
+  SOURCE src/notify.h
+  WORKING_DIRECTORY doxygen
+  COMMAND doxygen Doxyfile
+  OUTPUTS ${CMAKE_CURRENT_SOURCE_DIR}/doc/man/man3/notify.h.3
+)
+
+add_custom_command(
+  TARGET man
+  SOURCE man
+  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/notify.h
+)
+
+add_library(notify SHARED src/notify.c)
+add_library(notify_static STATIC src/notify.c)
 set_target_properties(notify_static PROPERTIES OUTPUT_NAME notify)
 
-install(FILES notify.h  DESTINATION "/usr/local/include/notify.h")
+install(FILES src/notify.h  DESTINATION "/usr/local/include/notify.h")
 install(TARGETS notify  DESTINATION "/usr/local/lib/")
 install(TARGETS notify_static  DESTINATION "/usr/local/lib/")
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/doc/man/man3 "/usr/local/share/man/")
 
 # Setup DEBIAN control files
 set(CPACK_COMPONENTS_ALL_IN_ONE_PACKAGE 1)

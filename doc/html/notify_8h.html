@@ -203,8 +203,46 @@ Variables</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Notification on multicast UDP communication. </p>
-<dl class="section author"><dt>Author</dt><dd>RedDec <a href="#" onclick="location.href='mai'+'lto:'+'net'+'.d'+'ev@'+'ma'+'il.'+'ru'; return false;">net.d<span style="display: none;">.nosp@m.</span>ev@m<span style="display: none;">.nosp@m.</span>ail.r<span style="display: none;">.nosp@m.</span>u</a> </dd></dl>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<dl class="section author"><dt>Author</dt><dd>RedDec <a href="#" onclick="location.href='mai'+'lto:'+'net'+'.d'+'ev@'+'ma'+'il.'+'ru'; return false;">net.d<span style="display: none;">.nosp@m.</span>ev@m<span style="display: none;">.nosp@m.</span>ail.r<span style="display: none;">.nosp@m.</span>u</a></dd></dl>
+<p>Send example:</p>
+<div class="fragment"><div class="line">        <span class="keywordtype">char</span> title[<a class="code" href="notify_8h.html#a8abacded46f4d1f1036e165ad9936c6b">__NOTIFY_MAX_TITLE_LEN</a>];                        <span class="comment">// Allocate buffer for `title` field</span></div>
+<div class="line">        <span class="keywordtype">char</span> format[<a class="code" href="notify_8h.html#ab88c18a0674d6466c04a1f90be55fd1c">__NOTIFY_MAX_FORMAT_LEN</a>];                      <span class="comment">// Allocate buffer for `format` field</span></div>
+<div class="line">        <span class="keywordtype">char</span> data[<a class="code" href="notify_8h.html#a8e840f2ab00b0c9a6f7fc3f60001522e">__NOTIFY_MAX_DATA_LEN</a>];                          <span class="comment">// Allocate buffer for `payload</span></div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Format: &quot;</span>;</div>
+<div class="line">        std::cin &gt;&gt; format;                                        <span class="comment">// Read `format` from stdin (console input)</span></div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Title: &quot;</span>;</div>
+<div class="line">        std::cin &gt;&gt; title;                                         <span class="comment">// Read `title` from stdin (console input)</span></div>
+<div class="line">        std::cout &lt;&lt; <span class="stringliteral">&quot;Data: &quot;</span>;</div>
+<div class="line">        std::cin &gt;&gt; data;                                          <span class="comment">// Read payload from stdin (console input)</span></div>
+<div class="line">        <span class="keywordtype">int</span> sender = socket(AF_INET, SOCK_DGRAM, 0);               <span class="comment">// Create UDP socket</span></div>
+<div class="line">        ssize_t bytes = <a class="code" href="notify_8h.html#a1b9f611aea29b046ae81690f09fabd2b">notify_text</a>(sender, format, title, data);  <span class="comment">// Send notification (as text)</span></div>
+<div class="line">        std::clog &lt;&lt; <span class="stringliteral">&quot;Sent &quot;</span> &lt;&lt; bytes &lt;&lt; <span class="stringliteral">&quot; bytes&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">        close(sender);                                             <span class="comment">// Close socket</span></div>
+</div><!-- fragment --><p> Receive example</p>
+<div class="fragment"><div class="line">        <span class="keywordtype">char</span> buffer[<a class="code" href="notify_8h.html#a573475aa25c3d4707d4f3eb2bb01aff1">__NOTIFY_PACKET_LIMIT</a>];                                                 <span class="comment">// Allocate buffer for packet</span></div>
+<div class="line">        ssize_t pack_size;</div>
+<div class="line">        <span class="keywordtype">size_t</span> tm_ms = 5000;                                                                <span class="comment">// Set timeout (5 seconds)</span></div>
+<div class="line">        <span class="keywordtype">int</span> listener = socket(AF_INET, SOCK_DGRAM, 0);                                      <span class="comment">// Create UDP socket</span></div>
+<div class="line">        <a class="code" href="notify_8h.html#ad378a2bde4dcc13be21c506e54041f3d">notify_setup_listener</a>(listener);                                                    <span class="comment">// Prepare socket</span></div>
+<div class="line">        <span class="keywordflow">while</span> ((pack_size = <a class="code" href="notify_8h.html#ab312ed2b44088179eccfd38261dd2219">notify_collect</a>(listener, tm_ms, buffer, <span class="keyword">sizeof</span>(buffer))) &gt; 0) { <span class="comment">// Read one packet</span></div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Packet size: &quot;</span> &lt;&lt; pack_size &lt;&lt; std::endl;</div>
+<div class="line">            <a class="code" href="structnotify__packet__t.html">notify_packet_t</a> pp = <a class="code" href="notify_8h.html#ae7d9dc0c738af6542df8b22f24943136">notify_parse_packet</a>(buffer, pack_size);                    <span class="comment">// Parse packet to structure</span></div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Format: &quot;</span>;</div>
+<div class="line">            <span class="keywordflow">if</span> (pp.<a class="code" href="structnotify__packet__t.html#a6bce6c2919cb2d7cceb74b024a52fe6f">format</a> != NULL)                                                          <span class="comment">// Check field `format`</span></div>
+<div class="line">                std::cout &lt;&lt; pp.<a class="code" href="structnotify__packet__t.html#a6bce6c2919cb2d7cceb74b024a52fe6f">format</a> &lt;&lt; std::endl;</div>
+<div class="line">            <span class="keywordflow">else</span></div>
+<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;no format field&gt;&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Title: &quot;</span>;</div>
+<div class="line">            <span class="keywordflow">if</span> (pp.<a class="code" href="structnotify__packet__t.html#ad011adac6f55a105fcb8fd21823c98dd">title</a> != NULL)                                                           <span class="comment">// Check field `title`</span></div>
+<div class="line">                std::cout &lt;&lt; pp.<a class="code" href="structnotify__packet__t.html#ad011adac6f55a105fcb8fd21823c98dd">title</a> &lt;&lt; std::endl;</div>
+<div class="line">            <span class="keywordflow">else</span></div>
+<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;no title field&gt;&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Data (&quot;</span> &lt;&lt; pp.<a class="code" href="structnotify__packet__t.html#af6ee9fc97f52935b9c4887b856d115e8">data_size</a> &lt;&lt; <span class="stringliteral">&quot; bytes): &quot;</span>;</div>
+<div class="line">            std::cout.write(pp.<a class="code" href="structnotify__packet__t.html#ac51484fff834e9d17d734627fcfc21b4">data</a>, pp.<a class="code" href="structnotify__packet__t.html#af6ee9fc97f52935b9c4887b856d115e8">data_size</a>);</div>
+<div class="line">            std::cout &lt;&lt; std::endl;</div>
+<div class="line">        }</div>
+<div class="line">        close(listener);                                                                    <span class="comment">// Close socket</span></div>
+</div><!-- fragment --></div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="ac0d2d96a51ba47ac1a052a0b0e1f0fd1"></a>
 <div class="memitem">
 <div class="memproto">
@@ -379,7 +417,31 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Collect first notification message till specified interval. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Receive example</p>
+<div class="fragment"><div class="line">        <span class="keywordtype">char</span> buffer[<a class="code" href="notify_8h.html#a573475aa25c3d4707d4f3eb2bb01aff1">__NOTIFY_PACKET_LIMIT</a>];                                                 <span class="comment">// Allocate buffer for packet</span></div>
+<div class="line">        ssize_t pack_size;</div>
+<div class="line">        <span class="keywordtype">size_t</span> tm_ms = 5000;                                                                <span class="comment">// Set timeout (5 seconds)</span></div>
+<div class="line">        <span class="keywordtype">int</span> listener = socket(AF_INET, SOCK_DGRAM, 0);                                      <span class="comment">// Create UDP socket</span></div>
+<div class="line">        <a class="code" href="notify_8h.html#ad378a2bde4dcc13be21c506e54041f3d">notify_setup_listener</a>(listener);                                                    <span class="comment">// Prepare socket</span></div>
+<div class="line">        <span class="keywordflow">while</span> ((pack_size = <a class="code" href="notify_8h.html#ab312ed2b44088179eccfd38261dd2219">notify_collect</a>(listener, tm_ms, buffer, <span class="keyword">sizeof</span>(buffer))) &gt; 0) { <span class="comment">// Read one packet</span></div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Packet size: &quot;</span> &lt;&lt; pack_size &lt;&lt; std::endl;</div>
+<div class="line">            <a class="code" href="structnotify__packet__t.html">notify_packet_t</a> pp = <a class="code" href="notify_8h.html#ae7d9dc0c738af6542df8b22f24943136">notify_parse_packet</a>(buffer, pack_size);                    <span class="comment">// Parse packet to structure</span></div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Format: &quot;</span>;</div>
+<div class="line">            <span class="keywordflow">if</span> (pp.<a class="code" href="structnotify__packet__t.html#a6bce6c2919cb2d7cceb74b024a52fe6f">format</a> != NULL)                                                          <span class="comment">// Check field `format`</span></div>
+<div class="line">                std::cout &lt;&lt; pp.<a class="code" href="structnotify__packet__t.html#a6bce6c2919cb2d7cceb74b024a52fe6f">format</a> &lt;&lt; std::endl;</div>
+<div class="line">            <span class="keywordflow">else</span></div>
+<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;no format field&gt;&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Title: &quot;</span>;</div>
+<div class="line">            <span class="keywordflow">if</span> (pp.<a class="code" href="structnotify__packet__t.html#ad011adac6f55a105fcb8fd21823c98dd">title</a> != NULL)                                                           <span class="comment">// Check field `title`</span></div>
+<div class="line">                std::cout &lt;&lt; pp.<a class="code" href="structnotify__packet__t.html#ad011adac6f55a105fcb8fd21823c98dd">title</a> &lt;&lt; std::endl;</div>
+<div class="line">            <span class="keywordflow">else</span></div>
+<div class="line">                std::cout &lt;&lt; <span class="stringliteral">&quot;&lt;no title field&gt;&quot;</span> &lt;&lt; std::endl;</div>
+<div class="line">            std::cout &lt;&lt; <span class="stringliteral">&quot;Data (&quot;</span> &lt;&lt; pp.<a class="code" href="structnotify__packet__t.html#af6ee9fc97f52935b9c4887b856d115e8">data_size</a> &lt;&lt; <span class="stringliteral">&quot; bytes): &quot;</span>;</div>
+<div class="line">            std::cout.write(pp.<a class="code" href="structnotify__packet__t.html#ac51484fff834e9d17d734627fcfc21b4">data</a>, pp.<a class="code" href="structnotify__packet__t.html#af6ee9fc97f52935b9c4887b856d115e8">data_size</a>);</div>
+<div class="line">            std::cout &lt;&lt; std::endl;</div>
+<div class="line">        }</div>
+<div class="line">        close(listener);                                                                    <span class="comment">// Close socket</span></div>
+</div><!-- fragment --> <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">socket_fd</td><td>UDP socket descriptor </td></tr>
     <tr><td class="paramname">interval_ms</td><td>Time interval in milliseconds. If nothing received <code>notify_error_timeout</code> will be returned </td></tr>
@@ -887,7 +949,7 @@ Variables</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Jul 12 2015 00:21:03 for Notify by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Jul 12 2015 11:35:04 for Notify by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

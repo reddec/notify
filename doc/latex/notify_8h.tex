@@ -92,8 +92,69 @@ static const char \hyperlink{notify_8h_a842092596600cba1ac5059d3de202baa}{notify
 
 \subsection{Detailed Description}
 Notification on multicast U\-D\-P communication. \begin{DoxyAuthor}{Author}
-Red\-Dec \href{mailto:net.dev@mail.ru}{\tt net.\-dev@mail.\-ru} 
+Red\-Dec \href{mailto:net.dev@mail.ru}{\tt net.\-dev@mail.\-ru}
 \end{DoxyAuthor}
+Send example\-:
+
+
+\begin{DoxyCodeInclude}
+        \textcolor{keywordtype}{char} title[\hyperlink{notify_8h_a8abacded46f4d1f1036e165ad9936c6b}{\_\_NOTIFY\_MAX\_TITLE\_LEN}];                        \textcolor{comment}{// Allocate buffer
+       for `title` field}
+        \textcolor{keywordtype}{char} format[\hyperlink{notify_8h_ab88c18a0674d6466c04a1f90be55fd1c}{\_\_NOTIFY\_MAX\_FORMAT\_LEN}];                      \textcolor{comment}{// Allocate
+       buffer for `format` field}
+        \textcolor{keywordtype}{char} data[\hyperlink{notify_8h_a8e840f2ab00b0c9a6f7fc3f60001522e}{\_\_NOTIFY\_MAX\_DATA\_LEN}];                          \textcolor{comment}{// Allocate buffer
+       for `payload}
+        std::cout << \textcolor{stringliteral}{"Format: "};
+        std::cin >> format;                                        \textcolor{comment}{// Read `format` from stdin (console
+       input)}
+        std::cout << \textcolor{stringliteral}{"Title: "};
+        std::cin >> title;                                         \textcolor{comment}{// Read `title` from stdin (console
+       input)}
+        std::cout << \textcolor{stringliteral}{"Data: "};
+        std::cin >> data;                                          \textcolor{comment}{// Read payload from stdin (console
+       input)}
+        \textcolor{keywordtype}{int} sender = socket(AF\_INET, SOCK\_DGRAM, 0);               \textcolor{comment}{// Create UDP socket}
+        ssize\_t bytes = \hyperlink{notify_8h_a1b9f611aea29b046ae81690f09fabd2b}{notify\_text}(sender, format, title, data);  \textcolor{comment}{// Send notification (as
+       text)}
+        std::clog << \textcolor{stringliteral}{"Sent "} << bytes << \textcolor{stringliteral}{" bytes"} << std::endl;
+        close(sender);                                             \textcolor{comment}{// Close socket}
+\end{DoxyCodeInclude}
+ Receive example
+
+
+\begin{DoxyCodeInclude}
+        \textcolor{keywordtype}{char} buffer[\hyperlink{notify_8h_a573475aa25c3d4707d4f3eb2bb01aff1}{\_\_NOTIFY\_PACKET\_LIMIT}];                                           
+            \textcolor{comment}{// Allocate buffer for packet}
+        ssize\_t pack\_size;
+        \textcolor{keywordtype}{size\_t} tm\_ms = 5000;                                                                \textcolor{comment}{// Set timeout
+       (5 seconds)}
+        \textcolor{keywordtype}{int} listener = socket(AF\_INET, SOCK\_DGRAM, 0);                                      \textcolor{comment}{// Create UDP
+       socket}
+        \hyperlink{notify_8h_ad378a2bde4dcc13be21c506e54041f3d}{notify\_setup\_listener}(listener);                                              
+            \textcolor{comment}{// Prepare socket}
+        \textcolor{keywordflow}{while} ((pack\_size = \hyperlink{notify_8h_ab312ed2b44088179eccfd38261dd2219}{notify\_collect}(listener, tm\_ms, buffer, \textcolor{keyword}{sizeof}(buffer))) > 0) \{ \textcolor{comment}{
+      // Read one packet}
+            std::cout << \textcolor{stringliteral}{"Packet size: "} << pack\_size << std::endl;
+            \hyperlink{structnotify__packet__t}{notify\_packet\_t} pp = \hyperlink{notify_8h_ae7d9dc0c738af6542df8b22f24943136}{notify\_parse\_packet}(buffer, pack\_size); 
+                         \textcolor{comment}{// Parse packet to structure}
+            std::cout << \textcolor{stringliteral}{"Format: "};
+            \textcolor{keywordflow}{if} (pp.\hyperlink{structnotify__packet__t_a6bce6c2919cb2d7cceb74b024a52fe6f}{format} != NULL)                                                          \textcolor{comment}{// Check
+       field `format`}
+                std::cout << pp.\hyperlink{structnotify__packet__t_a6bce6c2919cb2d7cceb74b024a52fe6f}{format} << std::endl;
+            \textcolor{keywordflow}{else}
+                std::cout << \textcolor{stringliteral}{"<no format field>"} << std::endl;
+            std::cout << \textcolor{stringliteral}{"Title: "};
+            \textcolor{keywordflow}{if} (pp.\hyperlink{structnotify__packet__t_ad011adac6f55a105fcb8fd21823c98dd}{title} != NULL)                                                           \textcolor{comment}{// Check
+       field `title`}
+                std::cout << pp.\hyperlink{structnotify__packet__t_ad011adac6f55a105fcb8fd21823c98dd}{title} << std::endl;
+            \textcolor{keywordflow}{else}
+                std::cout << \textcolor{stringliteral}{"<no title field>"} << std::endl;
+            std::cout << \textcolor{stringliteral}{"Data ("} << pp.\hyperlink{structnotify__packet__t_af6ee9fc97f52935b9c4887b856d115e8}{data\_size} << \textcolor{stringliteral}{" bytes): "};
+            std::cout.write(pp.\hyperlink{structnotify__packet__t_ac51484fff834e9d17d734627fcfc21b4}{data}, pp.\hyperlink{structnotify__packet__t_af6ee9fc97f52935b9c4887b856d115e8}{data\_size});
+            std::cout << std::endl;
+        \}
+        close(listener);                                                                    \textcolor{comment}{// Close socket}
+\end{DoxyCodeInclude}
 
 
 \subsection{Macro Definition Documentation}
@@ -176,7 +237,43 @@ Return codes for each functions.
 
 Collect first notification message till specified interval. 
 
+Receive example
 
+
+\begin{DoxyCodeInclude}
+        \textcolor{keywordtype}{char} buffer[\hyperlink{notify_8h_a573475aa25c3d4707d4f3eb2bb01aff1}{\_\_NOTIFY\_PACKET\_LIMIT}];                                           
+            \textcolor{comment}{// Allocate buffer for packet}
+        ssize\_t pack\_size;
+        \textcolor{keywordtype}{size\_t} tm\_ms = 5000;                                                                \textcolor{comment}{// Set timeout
+       (5 seconds)}
+        \textcolor{keywordtype}{int} listener = socket(AF\_INET, SOCK\_DGRAM, 0);                                      \textcolor{comment}{// Create UDP
+       socket}
+        \hyperlink{notify_8h_ad378a2bde4dcc13be21c506e54041f3d}{notify\_setup\_listener}(listener);                                              
+            \textcolor{comment}{// Prepare socket}
+        \textcolor{keywordflow}{while} ((pack\_size = \hyperlink{notify_8h_ab312ed2b44088179eccfd38261dd2219}{notify\_collect}(listener, tm\_ms, buffer, \textcolor{keyword}{sizeof}(buffer))) > 0) \{ \textcolor{comment}{
+      // Read one packet}
+            std::cout << \textcolor{stringliteral}{"Packet size: "} << pack\_size << std::endl;
+            \hyperlink{structnotify__packet__t}{notify\_packet\_t} pp = \hyperlink{notify_8h_ae7d9dc0c738af6542df8b22f24943136}{notify\_parse\_packet}(buffer, pack\_size); 
+                         \textcolor{comment}{// Parse packet to structure}
+            std::cout << \textcolor{stringliteral}{"Format: "};
+            \textcolor{keywordflow}{if} (pp.\hyperlink{structnotify__packet__t_a6bce6c2919cb2d7cceb74b024a52fe6f}{format} != NULL)                                                          \textcolor{comment}{// Check
+       field `format`}
+                std::cout << pp.\hyperlink{structnotify__packet__t_a6bce6c2919cb2d7cceb74b024a52fe6f}{format} << std::endl;
+            \textcolor{keywordflow}{else}
+                std::cout << \textcolor{stringliteral}{"<no format field>"} << std::endl;
+            std::cout << \textcolor{stringliteral}{"Title: "};
+            \textcolor{keywordflow}{if} (pp.\hyperlink{structnotify__packet__t_ad011adac6f55a105fcb8fd21823c98dd}{title} != NULL)                                                           \textcolor{comment}{// Check
+       field `title`}
+                std::cout << pp.\hyperlink{structnotify__packet__t_ad011adac6f55a105fcb8fd21823c98dd}{title} << std::endl;
+            \textcolor{keywordflow}{else}
+                std::cout << \textcolor{stringliteral}{"<no title field>"} << std::endl;
+            std::cout << \textcolor{stringliteral}{"Data ("} << pp.\hyperlink{structnotify__packet__t_af6ee9fc97f52935b9c4887b856d115e8}{data\_size} << \textcolor{stringliteral}{" bytes): "};
+            std::cout.write(pp.\hyperlink{structnotify__packet__t_ac51484fff834e9d17d734627fcfc21b4}{data}, pp.\hyperlink{structnotify__packet__t_af6ee9fc97f52935b9c4887b856d115e8}{data\_size});
+            std::cout << std::endl;
+        \}
+        close(listener);                                                                    \textcolor{comment}{// Close socket}
+\end{DoxyCodeInclude}
+ 
 \begin{DoxyParams}{Parameters}
 {\em socket\-\_\-fd} & U\-D\-P socket descriptor \\
 \hline

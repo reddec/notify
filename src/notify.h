@@ -2,6 +2,14 @@
 \file notify.h
 \brief Notification on multicast UDP communication
 \author RedDec <net.dev@mail.ru>
+
+ Send example:
+
+ \snippet example.cpp  Send data from console
+
+ Receive example
+
+ \snippet example.cpp Receive data
 */
 
 #ifndef NOTTINGHAM_NOTIFY_H
@@ -75,8 +83,8 @@ ssize_t notify_data(int socket_fd,
 /**
 \brief Send notification with textual data.
 
- Wraps it to ::notify_packet_t and sends.
- Content size determinated by strnlen() and can't be more then #notify_max_data_len
+Wraps it to ::notify_packet_t and sends.
+Content size determinated by strnlen() and can't be more then #notify_max_data_len
 
 \param socket_fd  UDP socket descriptor
 \param format     Packet format type. Can be used as small description of payload format
@@ -122,6 +130,11 @@ ssize_t notify_setup_listener(int socket_fd);
 
 /**
 \brief Collect first notification message till specified interval
+
+Receive example
+
+\snippet example.cpp Receive data
+
 \param socket_fd     UDP socket descriptor
 \param interval_ms   Time interval in milliseconds. If nothing received `notify_error_timeout` will be returned
 \param buffer        Buffer for incoming packet. More then `notify_max_packet_size` is not required
